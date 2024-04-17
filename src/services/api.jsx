@@ -41,3 +41,14 @@ export const register = async (data) => {
         }
     }
 }
+
+export const getChannelsDetails = async (channelId) => {
+    try{
+        return await apiClient.get(`/channels/${channelId}`)
+    }catch(e){
+        return{
+            error: true,
+            e
+        }
+    }
+}
