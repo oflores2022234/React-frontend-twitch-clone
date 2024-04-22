@@ -1,4 +1,5 @@
 import axios from "axios";
+import { logout } from "../shared/hooks";
 
 const apiClient = axios.create({
     baseURL: 'http://127.0.0.1:3001/twitch/v1',
@@ -60,5 +61,25 @@ export const getChannels = async () => {
             error: true,
             e
         }
+    }
+}
+
+export const getFollowedChannels = async () => {
+    try{
+        return await apiClient.get('/channels/followed')
+    }catch(e){
+        checkResponseStatus(e)
+        return{ 
+            error: true,
+            e:e
+        }
+    }
+}
+
+const checkResponseStatus = (e) => {
+    const responseStatus = e?.response?.status
+
+    if(responseStatus){
+        (responseStatus === 401 || responseStatus === 403) && logout
     }
 }
