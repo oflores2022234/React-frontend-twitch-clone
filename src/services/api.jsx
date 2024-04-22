@@ -10,7 +10,7 @@ apiClient.interceptors.request.use(
         const userDetails = localStorage.getItem('user')
 
         if(userDetails){
-            const token =  JSON.stringify(userDetails).token
+            const token =  JSON.parse(userDetails).token
             config.headers.Authorization = `Bearer ${token}`
         }
         return config
@@ -45,6 +45,16 @@ export const register = async (data) => {
 export const getChannelsDetails = async (channelId) => {
     try{
         return await apiClient.get(`/channels/${channelId}`)
+    }catch(e){
+        return{
+            error: true,
+            e
+        }
+    }
+}
+export const getChannels = async () => {
+    try{
+        return await apiClient.get('/channels')
     }catch(e){
         return{
             error: true,
