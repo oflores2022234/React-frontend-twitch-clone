@@ -5,7 +5,7 @@ import {  getChannels as getChannelsRequest, getFollowedChannels} from "../../se
 
 
 export const useChannels = () => {
-    const [ channels, setChannels ] = useState([])
+    const [ channels, setChannels ] = useState()
 
     const getChannels = async(isLogged = false) => {
         const channelsData = await getChannelsRequest()

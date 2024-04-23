@@ -76,6 +76,29 @@ export const getFollowedChannels = async () => {
     }
 }
 
+export const getChannelSettings = async () => {
+    try{
+        return await apiClient.get('/settings/channel')
+    }catch(e){
+        return{ 
+            error: true,
+            e
+        }
+    }
+}
+
+export const updateChannelSettings = async (data) => {
+    try{
+        return await apiClient.put('/settings/channel', data)
+    }catch(e){
+        checkResponseStatus(e)
+        return{ 
+            error: true,
+            e
+        }
+    }
+}
+
 const checkResponseStatus = (e) => {
     const responseStatus = e?.response?.status
 
