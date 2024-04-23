@@ -35,6 +35,7 @@ export const useChannelSettings = () => {
 
         toast.success('Información actualizada exitosamente')
     }
+    
 
     useEffect(() =>{
         fetchChannelSettings()

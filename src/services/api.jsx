@@ -2,7 +2,7 @@ import axios from "axios";
 import { logout } from "../shared/hooks";
 
 const apiClient = axios.create({
-    baseURL: 'http://127.0.0.1:3001/twitch/v1',
+    baseURL: 'http://127.0.0.1:8080/twitch/v1',
     timeout: 1000
 })
 
@@ -96,6 +96,19 @@ export const updateChannelSettings = async (data) => {
             error: true,
             e
         }
+    }
+}
+
+export const changePassword = async (data) => {
+    try {
+            return await apiClient.patch('/settings/password', data)
+    } catch (e) {
+        checkResponseStatus(e)
+        return{
+            error: true,
+            e
+        }
+        
     }
 }
 
