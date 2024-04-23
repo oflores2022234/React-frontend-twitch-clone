@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react"
 import toast from "react-hot-toast"
-import { getChannelSettings } from "../../services"
+import { getChannelSettings, updateChannelSettings } from "../../services"
 
 export const useChannelSettings = () => {
-    const [channelSettings, setChannelSettings] = useState(null)
+    const [channelSettings, setChannelSettings] = useState()
 
     const fetchChannelSettings = async () => {
         const response = await getChannelSettings()
@@ -23,12 +23,26 @@ export const useChannelSettings = () => {
         })
     }
 
+    const saveSettings = async (data) => {
+        const response = await updateChannelSettings(data)
+
+        if(response.error){
+            return toast.error(
+                response.e?.response?.data ||
+                'Error al actualizar la información'
+            )
+        }
+
+        toast.success('Información actualizada exitosamente')
+    }
+
     useEffect(() =>{
         fetchChannelSettings()
     }, [])
 
   return {
     isFetching: !channelSettings,
-    channelSettings
+    channelSettings,
+    saveSettings
   }
 }

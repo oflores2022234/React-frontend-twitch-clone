@@ -38,7 +38,7 @@ const inputs = [
     type: "text",
   },
 ];
-export const ChannelSettings = ({ settings }) => {
+export const ChannelSettings = ({ settings, saveSettings }) => {
   const [formState, setFormState] = useState({
     title: {
       isValid: validateTitle(settings.title),
@@ -100,6 +100,24 @@ export const ChannelSettings = ({ settings }) => {
     }))
   };
 
+  const handleFormSubmit = (event) =>{
+    event.preventDefault()
+
+    saveSettings({
+        username: formState.username.value,
+        title: formState.title.value,
+        description: formState.description.value,
+        avatarUrl: formState.avatarUrl.value
+    })
+
+    console.log(formState)
+  }
+
+  const isSubmitButtonDisabled = !formState.username.isValid ||
+                                 !formState.title.isValid ||
+                                 !formState.avatarUrl.isValid ||
+                                 !formState.description.isValid
+
   return(
     <form className="settings-form">
         {inputs.map((input) => (
@@ -116,7 +134,7 @@ export const ChannelSettings = ({ settings }) => {
                 textarea={input.textarea}
             />
         ))}
-        <button>
+        <button onClick={handleFormSubmit} disabled={isSubmitButtonDisabled}>
             Guardar
         </button>
     </form>
